@@ -76,6 +76,25 @@ function psQuote(value) {
   return `'${value.replace(/'/g, "''")}'`;
 }
 
+function printWindowsPathRefreshHelp(binDir) {
+  const directCommand = path.join(binDir, 'phd.cmd');
+
+  console.log('');
+  console.log('This terminal still has the old PATH loaded.');
+  console.log('To run "phd" in this same Command Prompt, run:');
+  console.log(`  set "PATH=${binDir};%PATH%"`);
+  console.log('  phd');
+  console.log('');
+  console.log('In PowerShell, run:');
+  console.log(`  $env:Path = ${psQuote(`${binDir};`)} + $env:Path`);
+  console.log('  phd');
+  console.log('');
+  console.log('You can also run it directly without changing this terminal:');
+  console.log(`  "${directCommand}"`);
+  console.log('');
+  console.log('New terminals will pick up the updated user PATH automatically.');
+}
+
 function ensureWindowsUserPath(binDir) {
   const command = [
     `$bin = ${psQuote(binDir)}`,
@@ -111,7 +130,7 @@ function ensurePath(binDir) {
   if (process.platform === 'win32') {
     ensureWindowsUserPath(binDir);
     console.log(`Added npm global bin to the user PATH: ${binDir}`);
-    console.log('Open a new terminal before running "phd".');
+    printWindowsPathRefreshHelp(binDir);
     return;
   }
 

@@ -32,7 +32,14 @@ npm run install:global
 
 This installs the package globally and registers the `phd` command. On Windows, the installer only appends the npm global bin directory to the user PATH if it is missing. It does not overwrite existing PATH entries.
 
-3. If the installer says PATH was updated, open a new terminal.
+3. If the installer says PATH was updated, open a new terminal before running `phd`.
+
+   To use the same Command Prompt immediately, run the command printed by the installer. It will look like this:
+
+```bat
+set "PATH=C:\Users\%username%\AppData\Roaming\npm;%PATH%"
+phd
+```
 
 4. Start the application from anywhere:
 ```bash
@@ -140,6 +147,18 @@ npm start
 - Verify Node.js version (16+ required)
 - Delete `node_modules` and run `npm install` again
 - Check for any antivirus software blocking the application
+
+**Windows: `phd` is not recognized after install**
+- Close the current terminal and open a new one, then run `phd` again
+- Or refresh PATH in the same Command Prompt:
+```bat
+set "PATH=%APPDATA%\npm;%PATH%"
+phd
+```
+- Or run the generated npm shim directly:
+```bat
+"%APPDATA%\npm\phd.cmd"
+```
 
 ## Performance Optimization
 
