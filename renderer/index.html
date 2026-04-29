@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PH Downloader</title>
+  <link rel="icon" href="../logo.png" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="animated-bg" aria-hidden="true"></div>
+
+  <header class="app-header">
+    <div class="logo">
+      <img class="logo-image" src="../logo.png" alt="PH" />
+      <span class="logo-text">Downloader</span>
+    </div>
+  </header>
+
+  <section class="url-section">
+    <div class="url-row">
+      <input
+        id="url-input"
+        type="url"
+        placeholder="Paste PornHub link here..."
+        spellcheck="false"
+        autocomplete="off"
+      />
+      <button id="btn-fetch" class="btn-primary">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+        </svg>
+        Search
+      </button>
+    </div>
+    <div class="folder-row">
+      <span class="folder-label">Output folder:</span>
+      <span id="folder-path" class="folder-path">Default (Downloads)</span>
+      <button id="btn-folder" class="btn-ghost">Change</button>
+    </div>
+  </section>
+
+  <main class="content">
+
+    <div id="state-idle" class="state state-visible">
+      <div class="idle-icon">
+        <svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="#ff9000" stroke-width="1.5" opacity="0.35">
+          <polygon points="5 3 19 12 5 21 5 3"/>
+        </svg>
+      </div>
+      <p class="idle-text">Paste a PornHub link and click <strong>Search</strong></p>
+      <p class="idle-sub">Helping you achieve what isn't easy to come by.</p>
+    </div>
+
+    <div id="state-loading" class="state hidden">
+      <div class="spinner"></div>
+      <p class="loading-text">Fetching video information...</p>
+    </div>
+
+    <div id="state-error" class="state hidden">
+      <div class="error-icon">&times;</div>
+      <p id="error-msg" class="error-text">Unknown error.</p>
+      <button id="btn-retry" class="btn-ghost mt-8">Try again</button>
+    </div>
+
+    <div id="state-video" class="state hidden">
+      <div class="video-card">
+        <div class="thumb-wrap">
+          <img id="thumb" src="" alt="" class="thumb" />
+          <div id="thumb-ph" class="thumb-placeholder">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#ff9000" stroke-width="1.5">
+              <rect x="2" y="3" width="20" height="14" rx="2"/><polygon points="10 8 16 11 10 14 10 8"/>
+            </svg>
+          </div>
+        </div>
+        <div class="video-meta">
+          <p id="video-title" class="video-title"></p>
+          <div id="format-badge" class="format-badge"></div>
+        </div>
+      </div>
+
+      <div class="select-row">
+        <label class="select-label" for="quality-select">Quality</label>
+        <div class="select-wrap">
+          <select id="quality-select"></select>
+          <svg class="select-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <polyline points="6 9 12 15 18 9"/>
+          </svg>
+        </div>
+      </div>
+
+      <div id="hls-notice" class="hls-notice hidden">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ff9000" stroke-width="2">
+          <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+        </svg>
+        The links are in HLS format, we’ll convert them to MP4
+      </div>
+
+      <button id="btn-download" class="btn-download">
+        <svg id="btn-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+          <polyline points="7 10 12 15 17 10"/>
+          <line x1="12" y1="15" x2="12" y2="3"/>
+        </svg>
+        <span id="btn-label">Download video</span>
+      </button>
+
+      <div id="progress-wrap" class="progress-wrap hidden">
+        <div class="progress-header">
+          <span id="progress-text" class="progress-text">Starting...</span>
+          <span id="progress-pct" class="progress-pct">0%</span>
+        </div>
+        <div class="progress-track">
+          <div id="progress-bar" class="progress-bar" style="width:0%"></div>
+        </div>
+        <div id="progress-sub" class="progress-sub"></div>
+      </div>
+
+      <div id="done-wrap" class="done-wrap hidden">
+        <div class="done-icon">&#10003;</div>
+        <p class="done-text">Download completed!</p>
+        <button id="btn-open-folder" class="btn-ghost">Open folder</button>
+      </div>
+    </div>
+
+  </main>
+
+  <footer class="app-footer">
+    <span>I did it because my friends were complaining that they couldn’t find an easy way to download videos from there.</span>
+    <span>By <strong>zuvisck</strong></span>
+  </footer>
+
+  <script src="../node_modules/particles.js/particles.js"></script>
+  <script src="renderer.js"></script>
+</body>
+</html>
