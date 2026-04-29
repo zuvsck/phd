@@ -22,7 +22,7 @@ A modern, cross-platform desktop application for downloading videos from PornHub
 1. Clone the repository:
 ```bash
 git clone https://github.com/zuvsck/phd.git
-cd ph-downloader
+cd phd
 ```
 
 2. Install the global command:
